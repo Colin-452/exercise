@@ -1,0 +1,194 @@
+/* This is Colin, my CSS */
+/* Basic Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+}
+
+header {
+    background-color: #20DEFF; /* Dark gray background */
+    color: #fff; /* White text */
+    padding: 1rem 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-between; /* Align content to both ends */
+    align-items: center; /* Vertically center align content */
+    padding: 1rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center; /* Vertically center align logo and text */
+}
+
+.logo img {
+    height: 50px;
+    margin-right: 1rem; /* Space between logo and text */
+}
+
+.logo span {
+    font-weight: bold;
+    font-size: 1.5rem; /* Larger font size for the logo text */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem; /* Space between navigation links */
+}
+
+nav ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+nav ul li a:hover {
+    background-color: #007BFF; /* Change background color on hover */
+    border-radius: 5px; /* Rounded corners */
+}
+
+main {
+    flex: 1; /* Main content area takes up remaining space */
+    padding: 2rem;
+}
+
+/* About Us Section */
+.about-us, .mission-values, .team, .testimonials, .contact-details {
+    background-color: #fff;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-us h1, .mission-values h2, .team h2, .testimonials h2, .contact-details h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.about-us p, .mission-values p, .team p, .testimonials p, .contact-details p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.mission-values .mission, .mission-values .values {
+    margin-bottom: 2rem;
+}
+
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.team-member {
+    flex: 1 1 300px;
+    text-align: left;
+}
+
+.team-member h3 {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.team-member p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.testimonial {
+    flex: 1 1 300px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+.testimonial cite {
+    font-style: normal;
+    display: block;
+    margin-top: 0.5rem;
+    color: #333;
+}
+
+/* Contact Details Section */
+.contact-details {
+    margin-top: 2rem;
+}
+
+.contact-details address {
+    font-style: normal;
+    margin-bottom: 1rem;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 2rem;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #20DEFF; /* Dark gray background */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin: 0 1rem; /* Space between list items */
+}
+
+footer ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack navigation links vertically */
+    }
+
+    .product-item, .team-member, .testimonial {
+        flex-basis: 100%; /* Each item takes up 100% of the width */
+    }
+
+    .gallery img {
+        flex-basis: 100%; /* Each image takes up 100% of the width */
+    }
+}

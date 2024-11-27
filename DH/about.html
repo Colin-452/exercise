@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Digital Haven</title>
+    <link rel="stylesheet" href="styles3.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Digital Haven Logo">
+                <span>Digital Haven</span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product.html">Products</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-us">
+            <h1>About Us</h1>
+            <p>Welcome to Digital Haven, your premier destination for the latest computers and IT gadgets. Founded in 2024, our mission is to provide high-quality technology solutions that meet the needs of modern consumers and businesses alike.</p>
+            <p>At Digital Haven, we believe in innovation, reliability, and exceptional customer service. Our team of experts is dedicated to helping you find the perfect products to enhance your digital lifestyle.</p>
+        </section>
+
+        <section class="mission-values">
+            <h2>Our Mission & Values</h2>
+            <div class="mission">
+                <h3>Mission</h3>
+                <p>To empower individuals and organizations with cutting-edge technology that simplifies and enhances their lives and work.</p>
+            </div>
+            <div class="values">
+                <h3>Values</h3>
+                <ul>
+                    <li><strong>Innovation:</strong> We constantly seek out new technologies and ideas to stay ahead of the curve.</li>
+                    <li><strong>Reliability:</strong> We strive to provide dependable products and services that you can count on.</li>
+                    <li><strong>Customer Focus:</strong> Your satisfaction is our top priority. We listen to your needs and provide personalized solutions.</li>
+                    <li><strong>Integrity:</strong> We operate with honesty and transparency in all our dealings.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="team">
+            <h2>Meet Our Team</h2>
+            <div class="team-member">
+                <h3>Colin</h3>
+                <p>Founder & CEO</p>
+                <p>With over 10 years of experience in the tech industry, Colin leads the vision and strategy at Digital Haven.</p>
+            </div>
+            <div class="team-member">
+                <h3>Sara</h3>
+                <p>Chief Technology Officer (CTO)</p>
+                <p>Sara brings her expertise in software development and technology innovation to ensure our products are top-notch.</p>
+            </div>
+            <div class="team-member">
+                <h3>Mike</h3>
+                <p>Head of Customer Service</p>
+                <p>Mike ensures that every customer has a positive experience and that their needs are met with the highest level of service.</p>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial">
+                <p>"I recently purchased a Surface Laptop 6 from Digital Haven, and I couldn't be happier. The customer service was outstanding, and the product exceeded my expectations."</p>
+                <p>- Oliver Wang</p>
+            </div>
+            <div class="testimonial">
+                <p>"The Logitech G610 keyboard I bought from Digital Haven is fantastic. The quality is superb, and the price is very reasonable. Highly recommend!"</p>
+                <p>- Ava Liu</p>
+            </div>
+        </section>
+
+        <section class="contact-details">
+            <h2>Contact Us</h2>
+            <p>For any inquiries or assistance, please feel free to contact us using the details below:</p>
+            <address>
+                <p><strong>Address:</strong> 123 Tech Street, Sydney, NSW 2000, Australia</p>
+                <p><strong>Phone:</strong> +61 2 1234 5678</p>
+                <p><strong>Email:</strong> info@digitalhaven.com.au</p>
+            </address>
+            <div id="map"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Digital Haven. All rights reserved.</p>
+        <p>Designed by Colin</p>
+        <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Social Media Links</a></li>
+            <li><a href="#">Sitemap</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        function initMap() {
+            const sydney = { lat: -33.8688, lng: 151.2093 };
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: sydney
+            });
+            const marker = new google.maps.Marker({
+                position: sydney,
+                map: map
+            });
+        }
+    </script>
+</body>
+</html>

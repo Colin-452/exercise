@@ -1,0 +1,286 @@
+/* This is Colin, my CSS*/
+/* Basic Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+}
+
+header {
+    background-color: #20DEFF; /* Light blue background */
+    color: #fff; /* White text */
+    padding: 1rem 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-between; /* Align content to both ends */
+    align-items: center; /* Vertically center align content */
+    padding: 1rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center; /* Vertically center align logo and text */
+}
+
+.logo img {
+    height: 50px;
+    margin-right: 1rem; /* Space between logo and text */
+}
+
+.logo span {
+    font-weight: bold;
+    font-size: 1.5rem; /* Larger font size for the logo text */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem; /* Space between navigation links */
+}
+
+nav ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+nav ul li a:hover {
+    background-color: #007BFF; /* Change background color on hover */
+    border-radius: 5px; /* Rounded corners */
+}
+
+main {
+    flex: 1; /* Main content area takes up remaining space */
+    padding: 2rem;
+}
+
+.company-intro {
+    background-color: #f4f4f4; /* Light gray background */
+    padding: 2rem;
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 2rem; /* Space below this section */
+}
+
+.company-intro h2, .company-intro h3 {
+    color: #007BFF; /* Blue headings */
+    margin-bottom: 1rem;
+}
+
+.company-intro p, .company-intro ul {
+    color: #333; /* Dark gray text */
+    line-height: 1.8;
+}
+
+.company-intro ul {
+    list-style: disc; /* Bulleted list */
+    padding-left: 20px; /* Indentation for bullet points */
+}
+
+.hero {
+    position: relative;
+    background: url('img/hero-banner.jpg') no-repeat center center/cover; /* Background image fills the entire area */
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000; /* Black text */
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px; /* Maximum width for hero content */
+}
+
+.hero h1 {
+    font-size: 3rem; /* Large heading */
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem; /* Subheading */
+    margin-bottom: 1rem;
+}
+
+.hero .btn {
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.hero .btn:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.featured-products {
+    margin-top: 2rem; /* Space above this section */
+}
+
+.featured-products h2 {
+    font-size: 2rem; /* Large heading */
+    margin-bottom: 1rem;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to next line */
+    gap: 1rem; /* Space between product items */
+}
+
+.product-item {
+    flex-basis: 30%; /* Each product item takes up 30% of the width */
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #ccc; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s; /* Smooth transition effect */
+}
+
+.product-item:hover {
+    transform: translateY(-10px); /* Move up on hover */
+}
+
+.product-item img {
+    max-width: 100%; /* Image width is equal to container width */
+    height: auto;
+}
+
+.product-item h3 {
+    margin-top: 1rem;
+}
+
+.product-item p {
+    margin-top: 0.5rem;
+}
+
+.product-item .btn {
+    display: block;
+    margin-top: 1rem;
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.product-item .btn:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.picture-gallery {
+    margin-top: 2rem; /* Space above this section */
+}
+
+.picture-gallery h2 {
+    font-size: 2rem; /* Large heading */
+    margin-bottom: 1rem;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping to next line */
+    gap: 1rem; /* Space between images */
+}
+
+.gallery img {
+    max-width: 100%; /* Image width is equal to container width */
+    height: auto;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    transition: transform 0.3s; /* Smooth transition effect */
+}
+
+.gallery img:hover {
+    transform: scale(1.05); /* Enlarge on hover */
+}
+
+.table-section {
+    margin-top: 2rem; /* Space above this section */
+}
+
+.table-section h2 {
+    font-size: 2rem; /* Large heading */
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%; /* Table width is 100% */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+table th, table td {
+    padding: 1rem;
+    border: 1px solid #ddd; /* Border */
+    text-align: left;
+}
+
+table th {
+    background-color: #f4f4f4; /* Light gray background for table headers */
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Lighter background for even rows */
+}
+
+table tr:hover {
+    background-color: #f1f1f1; /* Change background color on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #20DEFF; /* Light blue background */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin: 0 1rem; /* Space between list items */
+}
+
+footer ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack navigation links vertically */
+    }
+
+    .product-item {
+        flex-basis: 100%; /* Each product item takes up 100% of the width */
+    }
+
+    .gallery img {
+        flex-basis: 100%; /* Each image takes up 100% of the width */
+    }
+
+    .company-intro {
+        padding: 1rem;
+    }
+}

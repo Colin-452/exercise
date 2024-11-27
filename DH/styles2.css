@@ -1,0 +1,298 @@
+/* This is Colin, my CSS */
+/* Basic Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+}
+
+header {
+    background-color: #20DEFF; /* Dark gray background */
+    color: #fff; /* White text */
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between; /* Align content to both ends */
+    align-items: center; /* Vertically center align content */
+}
+
+.logo {
+    display: flex;
+    align-items: center; /* Vertically center align logo and text */
+}
+
+.logo img {
+    height: 50px;
+    margin-right: 1rem; /* Space between logo and text */
+}
+
+.logo span {
+    font-weight: bold;
+    font-size: 1.5rem; /* Larger font size for the logo text */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem; /* Space between navigation links */
+}
+
+nav ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+nav ul li a:hover {
+    background-color: #007BFF; /* Change background color on hover */
+    border-radius: 5px; /* Rounded corners */
+}
+
+main {
+    flex: 1; /* Main content area takes up remaining space */
+    padding: 2rem;
+}
+
+.hero {
+    position: relative;
+    background: url('img/hero-banner.jpg') no-repeat center center/cover; /* Background image fills the entire area */
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000; /* Black text */
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px; /* Maximum width for hero content */
+}
+
+.hero h1 {
+    font-size: 3rem; /* Large heading */
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem; /* Subheading */
+    margin-bottom: 1rem;
+}
+
+.hero .btn {
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.hero .btn:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+/* Product Details Section */
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: #fff;
+    margin: 2rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    border-radius: 5px; /* Rounded corners */
+    flex-wrap: wrap; /* Allow wrapping for small screens */
+}
+
+.product-images {
+    flex: 1;
+    margin-right: 2rem;
+    max-width: 50%; /* Ensure images do not take more than 50% of the container width */
+}
+
+.main-image {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Ensure the image is displayed as a block element */
+}
+
+.thumbnail-images img {
+    width: 100px;
+    cursor: pointer;
+    margin-right: 10px;
+    opacity: 0.7;
+    transition: opacity 0.3s; /* Smooth transition effect */
+}
+
+.thumbnail-images img:hover {
+    opacity: 1; /* Full opacity on hover */
+}
+
+.product-info {
+    flex: 1;
+    flex-basis: 45%; /* Minimum width for the info section */
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.product-info .price {
+    font-size: 1.5rem;
+    color: #ff6347;
+    margin-bottom: 1rem;
+}
+
+.product-info p {
+    margin-bottom: 1rem;
+}
+
+.product-info .btn {
+    background-color: #ff6347; /* Orange background */
+    color: #fff; /* White text */
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.product-info .btn:hover {
+    background-color: #e05435; /* Change background color on hover */
+}
+
+/* User Reviews Section */
+.reviews {
+    padding: 2rem;
+    background-color: #fff;
+    margin: 2rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.reviews h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.review-list {
+    margin-bottom: 2rem;
+}
+
+.review-item {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+}
+
+.review-item p {
+    margin-bottom: 0.5rem;
+}
+
+.review-item span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.review-form {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.review-form input,
+.review-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.review-form .btn {
+    background-color: #ff6347; /* Orange background */
+    color: #fff; /* White text */
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+.review-form .btn:hover {
+    background-color: #e05435; /* Change background color on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #20DEFF; /* Dark gray background */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin: 0 1rem; /* Space between list items */
+}
+
+footer ul li a {
+    color: #fff; /* White text */
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column; /* Stack navigation links vertically */
+    }
+
+    .product-details {
+        flex-direction: column; /* Stack product details sections vertically */
+    }
+
+    .product-images {
+        margin-right: 0;
+        margin-bottom: 2rem;
+        max-width: 100%; /* Adjust max-width for smaller screens */
+    }
+
+    .thumbnail-images img {
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .review-list {
+        margin-bottom: 2rem;
+    }
+
+    .gallery img {
+        flex-basis: 100%; /* Each image takes up 100% of the width */
+    }
+}
+
+@media (max-width: 480px) {
+    .thumbnail-images img {
+        width: 60px;
+        margin-right: 10px;
+    }
+}

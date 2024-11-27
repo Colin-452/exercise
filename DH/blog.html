@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Digital Haven</title>
+    <link rel="stylesheet" href="styles5.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Digital Haven Logo">
+                <span>Digital Haven</span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product.html">Products</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="blog.html" aria-current="page">Blog</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-intro">
+            <h1>Blog</h1>
+            <p>Stay up-to-date with the latest industry trends, product reviews, and helpful tips from Digital Haven.</p>
+        </section>
+
+        <section class="blog-posts">
+            <article class="blog-post">
+                <img src="blog-post-4.png" alt="Blog Post Image 4">
+                <h2>Artificial Intelligence: The Next Frontier in Technology</h2>
+                <p class="author">By Sarah Williams</p>
+                <p class="date">November 22, 2024</p>
+                <p class="summary">This article delves into the expanding role of artificial intelligence across various industries, highlighting key developments and future projections. Learn about AI's impact on business models and consumer experiences.</p>
+                <a href="blog-post-4.html" class="read-more">Read More</a>
+            </article>
+
+            <article class="blog-post">
+                <img src="blog-post-5.png" alt="Blog Post Image 5">
+                <h2>The Importance of Cybersecurity in the Digital Age</h2>
+                <p class="author">By Michael Brown</p>
+                <p class="date">November 18, 2024</p>
+                <p class="summary">As technology advances, so do the threats to our digital security. In this post, we discuss essential cybersecurity measures that individuals and businesses should adopt to protect sensitive data and maintain privacy.</p>
+                <a href="blog-post-5.html" class="read-more">Read More</a>
+            </article>
+
+            <article class="blog-post">
+                <img src="blog-post-6.png" alt="Blog Post Image 6">
+                <h2>Sustainable Technology Practices for Businesses</h2>
+                <p class="author">By Laura Martinez</p>
+                <p class="date">November 13, 2024</p>
+                <p class="summary">Discover how adopting sustainable technology practices can not only benefit the environment but also enhance corporate reputation and reduce costs. We explore practical steps companies can take towards greener operations.</p>
+                <a href="blog-post-6.html" class="read-more">Read More</a>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Digital Haven. All rights reserved.</p>
+        <p>Designed by Colin</p>
+        <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Social Media Links</a></li>
+            <li><a href="#">Sitemap</a></li>
+        </ul>
+    </footer>
+
+    <!-- JavaScript code to handle Read More clicks -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const readMoreLinks = document.querySelectorAll('.read-more');
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+                    alert('Button clicked!'); 
+                });
+            });
+        });
+    </script>
+</body>
+</html>
