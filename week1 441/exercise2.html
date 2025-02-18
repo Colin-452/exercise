@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: purple;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <button id="clickButton">Click Me</button>
+    <p>Total Clicks: <span id="clickCount">0</span></p>
+
+    <script>
+        // Initialize the click counter
+        let clickCount = 0;
+
+        // Get references to the button and the span element
+        const clickButton = document.getElementById('clickButton');
+        const clickCountElement = document.getElementById('clickCount');
+
+        // Add an event listener to the button
+        clickButton.addEventListener('click', () => {
+            // Increment the click counter
+            clickCount++;
+            // Update the text content of the span element
+            clickCountElement.textContent = clickCount;
+        });
+    </script>
+</body>
+</html>

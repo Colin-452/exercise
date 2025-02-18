@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate List</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <button id="generateListBtn">Generate List</button>
+    <ul id="numberList"></ul>
+
+    <script>
+        document.getElementById('generateListBtn').addEventListener('click', function() {
+            var list = document.getElementById('numberList');
+            list.innerHTML = ''; // Clear the list before generating new numbers
+
+            for (var i = 1; i <= 10; i++) {
+                var listItem = document.createElement('li');
+                listItem.textContent = i;
+                list.appendChild(listItem);
+            }
+        });
+    </script>
+</body>
+</html>

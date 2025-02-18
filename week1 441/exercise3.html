@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .filter-buttons {
+            margin: 20px 0;
+        }
+        .filter-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        .filter-buttons button:nth-child(1) {
+            background-color: #4CAF50; 
+        }
+        .filter-buttons button:nth-child(2) {
+            background-color: #2196F3; 
+        }
+        .filter-buttons button:nth-child(3) {
+            background-color: #f44336; 
+        }
+        .filter-buttons button:nth-child(4) {
+            background-color: #FF9800; 
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery img {
+            margin: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Image Gallery</h1>
+    <div class="filter-buttons">
+        <button onclick="filterGallery('all')">All</button>
+        <button onclick="filterGallery('nature')">Nature</button>
+        <button onclick="filterGallery('city')">City</button>
+        <button onclick="filterGallery('animals')">Animals</button>
+    </div>
+    <div class="gallery">
+        <img src="nature1.png" alt="Nature 1" data-category="nature">
+        <img src="nature2.png" alt="Nature 2" data-category="nature">
+        <img src="city1.png" alt="City 1" data-category="city">
+        <img src="city2.png" alt="City 2" data-category="city">
+        <img src="animals1.png" alt="Animals 1" data-category="animals">
+        <img src="animals2.png" alt="Animals 2" data-category="animals">
+    </div>
+
+    <script>
+        function filterGallery(category) {
+            const images = document.querySelectorAll('.gallery img');
+            images.forEach(image => {
+                if (category === 'all' || image.getAttribute('data-category') === category) {
+                    image.style.display = 'block';
+                } else {
+                    image.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Greeting</title>
+</head>
+<body>
+    <h1 id="greeting"></h1>
+
+    <script>
+        // Ask the user for their name
+        var userName = prompt("What is your name?");
+
+        // Check if the user entered a name
+        if (userName) {
+            // Display the personalized greeting
+            document.getElementById("greeting").innerText = "Hello, " + userName + "! Welcome to our website.";
+        } else {
+            // Handle the case where the user didn't enter a name
+            document.getElementById("greeting").innerText = "Hello! Welcome to our website.";
+        }
+    </script>
+</body>
+</html>
