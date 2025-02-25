@@ -1,0 +1,36 @@
+<!--I am Colin-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Page</title>
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const result = {};
+            for (const [key, value] of params.entries()) {
+                result[key] = value;
+            }
+            return result;
+        }
+
+        window.onload = function () {
+            const queryParams = getQueryParams();
+            const name = queryParams['name'] || 'Not provided';
+            const email = queryParams['email'] || 'Not provided';
+            const age = queryParams['age'] || 'Not provided';
+
+            document.getElementById('name-value').textContent = name;
+            document.getElementById('email-value').textContent = email;
+            document.getElementById('age-value').textContent = age;
+        };
+    </script>
+</head>
+<body>
+    <h2>Submitted Values</h2>
+    <p><strong>Name:</strong> <span id="name-value"></span></p>
+    <p><strong>Email:</strong> <span id="email-value"></span></p>
+    <p><strong>Age:</strong> <span id="age-value"></span></p>
+</body>
+</html>
