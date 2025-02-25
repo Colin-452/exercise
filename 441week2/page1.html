@@ -1,0 +1,33 @@
+<!--I am Colin-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set or Destroy Cookie</title>
+    <script>
+        function setCookie() {
+            const name = document.getElementById("nameInput").value.trim(); // Get the input value
+            if (name === "") {
+                alert("Please enter your name!");
+                return;
+            }
+            document.cookie = `username=${name}; path=/; max-age=86400`; // Set cookie for 1 day
+            alert(`Cookie set to: ${name}`);
+        }
+
+        function destroyCookie() {
+            document.cookie = "username=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"; // Delete the cookie
+            alert("Cookie destroyed!");
+        }
+    </script>
+</head>
+<body>
+    <h1>Set or Destroy Cookie</h1>
+    <label for="nameInput">Enter your name:</label>
+    <input type="text" id="nameInput" placeholder="Your Name">
+    <br><br>
+    <button onclick="setCookie()">Set Cookie to Your Name</button>
+    <button onclick="destroyCookie()">Destroy Cookie</button>
+</body>
+</html>

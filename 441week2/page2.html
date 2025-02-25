@@ -1,0 +1,26 @@
+<!--I am Colin-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Cookie</title>
+    <script>
+        function readCookie() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === "username") {
+                    alert(`Cookie value is: ${value}`);
+                    return;
+                }
+            }
+            alert("No cookie found!");
+        }
+    </script>
+</head>
+<body>
+    <h1>Read Cookie Value</h1>
+    <button onclick="readCookie()">Read Cookie</button>
+</body>
+</html>
