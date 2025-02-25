@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Demonstration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .demo {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Role of the Document Object Model (DOM) in Client-Side Scripting</h1>
+    <p>
+        The <strong>Document Object Model (DOM)</strong> is a programming interface that represents the structure of a webpage as a tree of objects. It allows client-side scripts (like JavaScript) to dynamically interact with and manipulate the content, structure, and style of a webpage. Below are two examples demonstrating its use:
+    </p>
+
+    <div class="demo">
+        <h2>Demo 1: Highlight Text on Click</h2>
+        <p>Click the button to highlight this paragraph:</p>
+        <button onclick="highlightText()">Highlight Text</button>
+        <p id="textToHighlight">This is an example paragraph. Click the button to highlight this text dynamically using the DOM.</p>
+        <script>
+            function highlightText() {
+                const paragraph = document.getElementById("textToHighlight"); // Select the paragraph
+                paragraph.classList.toggle("highlight"); // Toggle the highlight class
+            }
+        </script>
+    </div>
+
+    <div class="demo">
+        <h2>Demo 2: Create a List Dynamically</h2>
+        <p>Click the button to generate a list of items:</p>
+        <button onclick="createList()">Generate List</button>
+        <div id="listContainer"></div>
+        <script>
+            function createList() {
+                const items = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]; // Array of items
+                const listContainer = document.getElementById("listContainer"); // Select the container
+                listContainer.innerHTML = ""; // Clear previous content
+
+                const ul = document.createElement("ul"); // Create a <ul> element
+                items.forEach(item => {
+                    const li = document.createElement("li"); // Create a <li> element
+                    li.textContent = item; // Set the text content
+                    ul.appendChild(li); // Add <li> to <ul>
+                });
+
+                listContainer.appendChild(ul); // Add <ul> to the container
+            }
+        </script>
+    </div>
+</body>
+</html>
