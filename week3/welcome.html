@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+</head>
+<body>
+    <h1 id="welcomeMessage"></h1>
+    <button id="deleteSession">Delete Session</button>
+
+    <script>
+        const username = sessionStorage.getItem('username');
+        if (!username) {
+            window.location.href = 'login.html'; // Redirect to login page if not logged in
+        } else {
+            document.getElementById('welcomeMessage').textContent = `Hello ${username}!`;
+        }
+
+        document.getElementById('deleteSession').addEventListener('click', function() {
+            sessionStorage.removeItem('username'); // Remove session variable
+            window.location.href = 'login.html'; // Redirect to login page
+        });
+    </script>
+</body>
+</html>

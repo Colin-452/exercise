@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage JSON Example</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Records</h1>
+    <table id="employeeTable">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        // JSON data
+        const employees = [
+            { FirstName: "Colin", LastName: "Fu", Email: "2534772584@qq.com", Phone: "+17280856212", Address: "123 Main St", City: "Ningbo", Country: "China" },
+            { FirstName: "York", LastName: "Huang", Email: "2847584699@qq.com", Phone: "+19876543212", Address: "456 Elm St", City: "Ningbo", Country: "China" },
+            { FirstName: "Stephen", LastName: "Xu", Email: "1988745778@qq.com", Phone: "+11234566655", Address: "789 Oak St", City: "Ningbo", Country: "China" },
+            { FirstName: "Grant", LastName: "Gao", Email: "1996458858@qq.com", Phone: "+14433221104", Address: "321 Pine St", City: "Ningbo", Country: "China" },
+            { FirstName: "Charlie", LastName: "Liu", Email: "2336885633@qq.com", Phone: "+15556667771", Address: "654 Maple St", City: "Ningbo", Country: "China" },
+            { FirstName: "Emma", LastName: "Zhao", Email: "2665466963@qq.com", Phone: "+16667778884", Address: "987 Cedar St", City: "Ningbo", Country: "China" },
+            { FirstName: "Michael", LastName: "Sun", Email: "2336696998@qq.com", Phone: "+17778889990", Address: "147 Birch St", City: "Ningbo", Country: "China" }
+        ];
+
+        // Store JSON data in localStorage
+        localStorage.setItem('employees', JSON.stringify(employees));
+
+        // Retrieve data from localStorage
+        const storedEmployees = JSON.parse(localStorage.getItem('employees'));
+
+        // Display data in the table
+        const tbody = document.querySelector('#employeeTable tbody');
+        storedEmployees.forEach(employee => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${employee.FirstName}</td>
+                <td>${employee.LastName}</td>
+                <td>${employee.Email}</td>
+                <td>${employee.Phone}</td>
+                <td>${employee.Address}</td>
+                <td>${employee.City}</td>
+                <td>${employee.Country}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

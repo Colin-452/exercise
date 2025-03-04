@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Family Records</h1>
+    <table id="familyTable">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to load and display JSON data
+        async function loadJSON() {
+            try {
+                // Fetch the JSON file
+                const response = await fetch('family.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load JSON file');
+                }
+
+                // Parse the JSON data
+                const data = await response.json();
+
+                // Get the table body element
+                const tbody = document.querySelector('#familyTable tbody');
+
+                // Loop through the data and create table rows
+                data.forEach(person => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${person.FirstName}</td>
+                        <td>${person.LastName}</td>
+                        <td>${person.Email}</td>
+                        <td>${person.Phone}</td>
+                        <td>${person.Address}</td>
+                        <td>${person.City}</td>
+                        <td>${person.Country}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+            }
+        }
+
+        // Call the function to load JSON data
+        loadJSON();
+    </script>
+</body>
+</html>
