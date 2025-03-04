@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Diary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        #diaryEntry {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        #addEntryBtn {
+            background: #324db1;
+            color: white;
+        }
+        #clearAllBtn {
+            background: #324db1;
+            color: white;
+        }
+        .entry {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        .delete-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: #ff5555;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Diary</h1>
+    <textarea id="diaryEntry" placeholder="Write your diary entry here..."></textarea>
+    <div class="button-group">
+        <button id="addEntryBtn" onclick="addEntry()">Add Entry</button>
+        <button id="clearAllBtn" onclick="clearAllEntries()">Clear All Entries</button>
+    </div>
+    <div id="entries">
+        <div class="entry">
+            <p>fsdasadfsdfa</p>
+            <button class="delete-btn">Delete</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadEntries);
+
+        function addEntry() {
+            const textarea = document.getElementById('diaryEntry');
+            const entryText = textarea.value.trim();
+            
+            if (!entryText) {
+                alert('Please write something!');
+                return;
+            }
+
+            const entry = {
+                id: Date.now(),
+                content: entryText,
+                timestamp: new Date().toLocaleString()
+            };
+
+            saveEntry(entry);
+            textarea.value = '';
+            loadEntries();
+        }
+
+        function saveEntry(entry) {
+            let entries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+            entries.unshift(entry);
+            localStorage.setItem('diaryEntries', JSON.stringify(entries));
+        }
+
+        function loadEntries() {
+            const entriesContainer = document.getElementById('entries');
+            entriesContainer.innerHTML = '';
+            
+            const entries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+            
+            entries.forEach(entry => {
+                const entryEl = document.createElement('div');
+                entryEl.className = 'entry';
+                entryEl.innerHTML = `
+                    <p>${entry.content}</p>
+                    <button class="delete-btn" onclick="deleteEntry(${entry.id})">Delete</button>
+                `;
+                entriesContainer.appendChild(entryEl);
+            });
+        }
+
+        function deleteEntry(id) {
+            let entries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
+            entries = entries.filter(entry => entry.id !== id);
+            localStorage.setItem('diaryEntries', JSON.stringify(entries));
+            loadEntries();
+        }
+
+        function clearAllEntries() {
+            if (confirm('Are you sure you want to delete ALL entries?')) {
+                localStorage.removeItem('diaryEntries');
+                loadEntries();
+            }
+        }
+    </script>
+</body>
+</html>

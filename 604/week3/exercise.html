@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create Object from JSON String</h2>
+
+<p id="demo"></p>
+
+<script>
+    let text = '{"employees":[' +
+    '{"firstName":"John","lastName":"Doe" },' +
+    '{"firstName":"Anna","lastName":"Smith" },' +
+    '{"firstName":"Colin","lastName":"Fu" }]}';
+    
+    const obj = JSON.parse(text);
+    let output = "";
+    
+    for (let i = 0; i < obj.employees.length; i++) {
+        output += obj.employees[i].firstName + " " + obj.employees[i].lastName + "<br>";
+    }
+    
+    document.getElementById("demo").innerHTML = output;
+    </script>
+    
+    <div id="demo"></div>
+
+</body>
+</html>
