@@ -1,5 +1,12 @@
 import pandas as pd
 import sqlite3
+import os
+
+# Check the current working directory
+print("Current working directory:", os.getcwd())
+
+# Change the working directory if necessary
+os.chdir('604week3')
 
 # Extract: Read customer and orders data from CSV files
 customers_df = pd.read_csv('customer.csv')
