@@ -1,0 +1,110 @@
+<!-- Colin-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Timetable Management</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Colin Timetable Management</h1>
+  <form id="timetable-form">
+    <input type="text" id="subject" placeholder="Subject" required>
+    <input type="text" id="day" placeholder="Day" required>
+    <input type="time" id="time" required>
+    <input type="text" id="teacher" placeholder="Teacher" required>
+    <button type="submit">Add Class</button>
+  </form>
+  <ul id="timetable-list"></ul>
+  
+  <!-- New Button to Export Data -->
+  <button id="export-button">Export to MySQL</button>
+
+  <script>
+    const dbRequest = indexedDB.open('TimetableDB', 1);
+    let db;
+
+    dbRequest.onsuccess = (event) => {
+      db = event.target.result;
+      displayClasses();
+    };
+
+    dbRequest.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      db.createObjectStore('timetable', { keyPath: 'id', autoIncrement: true });
+    };
+
+    document.getElementById('timetable-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const subject = document.getElementById('subject').value;
+      const day = document.getElementById('day').value;
+      const time = document.getElementById('time').value;
+      const teacher = document.getElementById('teacher').value;
+
+      const transaction = db.transaction(['timetable'], 'readwrite');
+      const store = transaction.objectStore('timetable');
+      store.add({ subject, day, time, teacher });
+
+      transaction.oncomplete = () => {
+        displayClasses();
+        e.target.reset();
+      };
+    });
+
+    function displayClasses() {
+      const transaction = db.transaction(['timetable'], 'readonly');
+      const store = transaction.objectStore('timetable');
+      const request = store.getAll();
+
+      request.onsuccess = () => {
+        const list = document.getElementById('timetable-list');
+        list.innerHTML = '';
+        request.result.forEach((cls) => {
+          const li = document.createElement('li');
+          li.innerHTML = `${cls.subject} - ${cls.day} - ${cls.time} - ${cls.teacher}
+            <button onclick="deleteClass(${cls.id})">Delete</button>`;
+          list.appendChild(li);
+        });
+      };
+    }
+
+    function deleteClass(id) {
+      const transaction = db.transaction(['timetable'], 'readwrite');
+      const store = transaction.objectStore('timetable');
+      store.delete(id);
+      transaction.oncomplete = displayClasses;
+    }
+
+    // Export data to PHP
+    document.getElementById('export-button').addEventListener('click', () => {
+      const transaction = db.transaction(['timetable'], 'readonly');
+      const store = transaction.objectStore('timetable');
+      const request = store.getAll();
+
+      request.onsuccess = () => {
+        const data = request.result;
+        
+        // Convert data to JSON
+        const jsonData = JSON.stringify(data);
+
+        // Send data to PHP via POST request
+        fetch('save.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: jsonData
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Data exported successfully!');
+        })
+        .catch(error => {
+          console.error('Error exporting data:', error);
+        });
+      };
+    });
+  </script>
+</body>
+</html>
