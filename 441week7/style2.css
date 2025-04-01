@@ -1,0 +1,71 @@
+/* Header Styles */
+.header {
+    background-color: #f0f0f0;  
+    padding: 30px 20px;        /* Increased vertical padding */
+    text-align: center;        /* Center-aligned text */
+    border-bottom: 2px solid #3498db; 
+    margin-bottom: 30px;       /* Bottom margin for spacing */
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;         /* Maximum content width */
+    margin: 0 auto;            /* Horizontal centering */
+    padding: 0 20px;           /* Horizontal padding */
+}
+
+/* Header-specific Container */
+.header .container {
+    display: flex;
+    flex-direction: column;    /* Vertical item arrangement */
+    align-items: center;       /* Horizontal centering */
+    gap: 10px;                /* Spacing between child elements */
+}
+
+/* Books Grid Layout */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 25px;                /* Increased grid gap */
+    padding: 20px 0;          /* Vertical padding */
+}
+
+/* Book Card Styling */
+article {
+    border: 1px solid #e0e0e0; 
+    padding: 25px;            /* Increased padding */
+    border-radius: 8px;       /* Larger border radius */
+    background-color: #fff;   
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Card Hover Effects */
+article:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    border-color: #3498db;    
+}
+
+/* Typography Enhancements */
+.header h1 {
+    color: #2c3e50;         
+    font-size: 2.2rem;        /* Larger font size */
+    margin-bottom: 0.5rem;    /* Spacing below heading */
+}
+
+.header p {
+    color: #7f8c8d;       
+    font-size: 1.1rem;       /* Slightly larger font */
+}
+
+/* Card Content Styling */
+article h2 {
+    color: #3498db;       
+    margin-top: 0;           /* Remove default margin */
+}
+
+article p {
+    color: #555;           
+    line-height: 1.6;       /* Improved readability */
+}

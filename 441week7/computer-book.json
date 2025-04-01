@@ -1,0 +1,109 @@
+{
+    "collectionName": "Computer Science Essentials",
+    "publisher": "Aussie Tech Press",
+    "yearPublished": 2023,
+    "location": "Sydney Digital Library",
+    "available": true,
+    "books": [
+      {
+        "title": "Python Programming for Australians",
+        "author": "Dr. Michael Smith, University of Melbourne",
+        "pages": 420,
+        "topics": [
+          "Python",
+          "Programming Fundamentals",
+          "Australian Curriculum"
+        ]
+      },
+      {
+        "title": "Data Science Down Under",
+        "author": "Prof. Emily Chen, Australian National University",
+        "pages": 380,
+        "topics": [
+          "Data Science",
+          "Machine Learning",
+          "Python"
+        ]
+      },
+      {
+        "title": "Cyber Security Essentials: An Australian Perspective",
+        "author": "Dr. James Wilson, CSIRO",
+        "pages": 320,
+        "topics": [
+          "Cyber Security",
+          "Network Protection",
+          "Australian Standards"
+        ]
+      },
+      {
+        "title": "AI in the Outback",
+        "author": "Dr. Sarah Johnson, University of Queensland",
+        "pages": 450,
+        "topics": [
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Australian Applications"
+        ]
+      },
+      {
+        "title": "Web Development with Australian Startups",
+        "author": "David Brown, TechSydney",
+        "pages": 290,
+        "topics": [
+          "Web Development",
+          "JavaScript",
+          "Startup Ecosystem"
+        ]
+      },
+      {
+        "title": "Cloud Computing: Australian Case Studies",
+        "author": "Prof. Alan Taylor, University of Sydney",
+        "pages": 410,
+        "topics": [
+          "AWS",
+          "Azure",
+          "Cloud Architecture"
+        ]
+      },
+      {
+        "title": "Blockchain and the Australian Economy",
+        "author": "Dr. Rachel Lee, RMIT University",
+        "pages": 360,
+        "topics": [
+          "Blockchain",
+          "Cryptocurrency",
+          "Financial Technology"
+        ]
+      },
+      {
+        "title": "Game Development with Unity: Australian Edition",
+        "author": "Mark Williams, Academy of Interactive Entertainment",
+        "pages": 340,
+        "topics": [
+          "Game Development",
+          "Unity",
+          "3D Modeling"
+        ]
+      },
+      {
+        "title": "Quantum Computing for Australians",
+        "author": "Dr. Thomas White, University of New South Wales",
+        "pages": 390,
+        "topics": [
+          "Quantum Computing",
+          "Physics",
+          "Advanced Algorithms"
+        ]
+      },
+      {
+        "title": "DevOps in the Australian Tech Industry",
+        "author": "Jessica Adams, Atlassian",
+        "pages": 310,
+        "topics": [
+          "DevOps",
+          "CI/CD",
+          "Australian Tech Companies"
+        ]
+      }
+    ]
+  }

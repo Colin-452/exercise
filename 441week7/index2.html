@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Must-Read Computer Books</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 id="collection-title">Hello Bookstore</h1>
+            <p id="collection-meta"></p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="books-container" class="books-grid"></section>
+    </main>
+
+    <script>
+        async function populateBooks() {
+            const requestURL = "computer-book.json";
+            const response = await fetch(requestURL);
+            const bookCollection = await response.json();
+            populateHeader(bookCollection);
+            populateBooksList(bookCollection);
+        }
+
+        function populateHeader(obj) {
+            const header = document.querySelector("header");
+            const myH1 = document.createElement("h1");
+            myH1.textContent = obj.collectionName;
+            header.appendChild(myH1);
+
+            const myPara = document.createElement("p");
+            myPara.textContent = `Publisher: ${obj.publisher} * Published: ${obj.yearPublished}`;
+            header.appendChild(myPara);
+        }
+
+        function populateBooksList(obj) {
+            const section = document.querySelector("section");
+            const books = obj.books;
+
+            for (const book of books) {
+                const myArticle = document.createElement("article");
+                const myH2 = document.createElement("h2");
+                const myPara1 = document.createElement("p");
+                const myPara2 = document.createElement("p");
+                const myPara3 = document.createElement("p");
+                const myList = document.createElement("ul");
+
+                myH2.textContent = book.title;
+                myPara1.textContent = `Author: ${book.author}`;
+                myPara2.textContent = `Pages: ${book.pages}`;
+                myPara3.textContent = "Topics:";
+
+                const topics = book.topics;
+                for (const topic of topics) {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = topic;
+                    myList.appendChild(listItem);
+                }
+
+                myArticle.appendChild(myH2);
+                myArticle.appendChild(myPara1);
+                myArticle.appendChild(myPara2);
+                myArticle.appendChild(myPara3);
+                myArticle.appendChild(myList);
+
+                section.appendChild(myArticle);
+            }
+        }
+
+        populateBooks();
+    </script>
+</body>
+</html>
