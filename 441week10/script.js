@@ -1,3 +1,4 @@
+//Colin
 // Global variables
 const dbName = "EcommerceDB";
 const dbVersion = 1;
@@ -253,8 +254,7 @@ function displayProducts() {
             <img src="images/${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p class="description">${product.description}</p>
-            <p class="price">$$
-{product.price.toFixed(2)}</p>
+            <p class="price">$${product.price.toFixed(2)}</p>
             <div class="quantity-control">
                 <button class="decrease-qty" data-id="${product.id}">-</button>
                 <input type="number" class="product-quantity" data-id="${product.id}" min="1" value="1">
@@ -265,7 +265,6 @@ function displayProducts() {
         productsContainer.appendChild(productCard);
     });
 }
-
 // Cart functions
 function loadCart() {
     const savedCart = localStorage.getItem('cart');
