@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - E-commerce App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1 class="app-title">E-commerce App</h1>
+            <nav class="main-nav">
+                <div class="logo">
+                    <img src="logo.png" alt="E-Commerce App Logo">
+                </div>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="cart.html" class="nav-link">Shopping Cart</a>
+                <a href="check.html" class="nav-link active">Checkout</a>
+                <div id="user-greeting" class="user-greeting"></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="order-confirmed">
+            <h2>Order Confirmation</h2>
+            <p>Thank you for your purchase!</p>
+            <div id="order-total-display" class="order-total-display"></div>
+            
+            <div class="order-actions">
+                <button id="download-json">Download Order (JSON)</button>
+                <button id="clear-data">Clear All Data</button>
+                <button id="logout-now">Logout</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p>&copy; 2023 E-commerce App. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
