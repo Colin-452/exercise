@@ -1,14 +1,12 @@
-//Colin
 // Global variables
 const dbName = "EcommerceDB";
-const dbVersion = 1;
 let currentUser = null;
 let products = [];
 let cart = [];
 
 // Initialize application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initializeDB();
+    initializeStorage();
     setupEventListeners();
     checkLoginStatus();
     loadPageSpecificContent();
@@ -21,34 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Database initialization
-function initializeDB() {
-    const request = indexedDB.open(dbName, dbVersion);
-
-    request.onupgradeneeded = function(event) {
-        const db = event.target.result;
-
-        if (!db.objectStoreNames.contains('users')) {
-            db.createObjectStore('users', { keyPath: 'username' });
-        }
-
-        if (!db.objectStoreNames.contains('products')) {
-            const productsStore = db.createObjectStore('products', { keyPath: 'id', autoIncrement: true });
-            productsStore.createIndex('name', 'name', { unique: false });
-        }
-
-        if (!db.objectStoreNames.contains('cart')) {
-            db.createObjectStore('cart', { keyPath: 'id' });
-        }
-
-        if (!db.objectStoreNames.contains('orders')) {
-            db.createObjectStore('orders', { keyPath: 'id', autoIncrement: true });
-        }
-    };
-
-    request.onerror = function(event) {
-        console.error("Database error:", event.target.error);
-    };
+// Storage initialization
+function initializeStorage() {
+    // Initialize localStorage structures if they don't exist
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify({}));
+    }
+    if (!localStorage.getItem('products')) {
+        localStorage.setItem('products', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('cart')) {
+        localStorage.setItem('cart', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('orders')) {
+        localStorage.setItem('orders', JSON.stringify([]));
+    }
 }
 
 // Setup event listeners
@@ -131,7 +116,7 @@ function setupEventListeners() {
 
     const logoutNowBtn = document.getElementById('logout-now');
     if (logoutNowBtn) {
-    logoutNowBtn.addEventListener('click', logoutUser);
+        logoutNowBtn.addEventListener('click', logoutUser);
     }
 }
 
@@ -142,29 +127,21 @@ function handleRegistration(event) {
     const username = document.getElementById('regUsername').value;
     const password = document.getElementById('regPassword').value;
     
-    const request = indexedDB.open(dbName, dbVersion);
+    if (!validateRegistrationForm(username, password)) {
+        return;
+    }
     
-    request.onsuccess = function(event) {
-        const db = event.target.result;
-        const transaction = db.transaction(['users'], 'readwrite');
-        const store = transaction.objectStore('users');
+    const users = JSON.parse(localStorage.getItem('users'));
+    if (users[username]) {
+        showMessage('Username already exists. Please choose another.', 'error');
+    } else {
+        users[username] = { username, password };
+        localStorage.setItem('users', JSON.stringify(users));
         
-        const getUserRequest = store.get(username);
-        
-        getUserRequest.onsuccess = function() {
-            if (getUserRequest.result) {
-                showMessage('Username already exists. Please choose another.', 'error');
-            } else {
-                const addUserRequest = store.add({ username, password });
-                
-                addUserRequest.onsuccess = function() {
-                    showMessage('Registration successful! Please login.', 'success');
-                    document.getElementById('regUsername').value = '';
-                    document.getElementById('regPassword').value = '';
-                };
-            }
-        };
-    };
+        showMessage('Registration successful! Please login.', 'success');
+        document.getElementById('regUsername').value = '';
+        document.getElementById('regPassword').value = '';
+    }
 }
 
 function handleLogin(event) {
@@ -173,44 +150,29 @@ function handleLogin(event) {
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
     
-    const request = indexedDB.open(dbName, dbVersion);
+    if (!validateLoginForm(username, password)) {
+        return;
+    }
     
-    request.onsuccess = function(event) {
-        const db = event.target.result;
-        const transaction = db.transaction(['users'], 'readonly');
-        const store = transaction.objectStore('users');
-        
-        const getUserRequest = store.get(username);
-        
-        getUserRequest.onsuccess = function() {
-            const user = getUserRequest.result;
-            
-            if (user && user.password === password) {
-                currentUser = user;
-                // Store username in sessionStorage instead of localStorage
-                sessionStorage.setItem('currentUser', JSON.stringify(user));
-                updateUserGreeting();
-                showMessage('Login successful! Redirecting to your cart...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'cart.html';
-                }, 1500);
-            } else {
-                showMessage('Invalid username or password.', 'error');
-            }
-        };
-        
-        getUserRequest.onerror = function() {
-            showMessage('Error during login. Please try again.', 'error');
-        };
-    };
+    const users = JSON.parse(localStorage.getItem('users'));
+    const user = users[username];
     
-    request.onerror = function() {
-        showMessage('Database error. Please try again later.', 'error');
-    };
+    if (user && user.password === password) {
+        currentUser = user;
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        updateUserGreeting();
+        showMessage('Login successful! Redirecting to your cart...', 'success');
+        setTimeout(() => {
+            window.location.href = 'cart.html';
+        }, 1500);
+    } else {
+        showMessage('Invalid username or password.', 'error');
+    }
 }
 
 function checkLoginStatus() {
-    const user = sessionStorage.getItem('currentUser'); // Changed to sessionStorage
+    const user = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
     if (user) {
         currentUser = JSON.parse(user);
         updateUserGreeting();
@@ -223,6 +185,7 @@ function updateUserGreeting() {
         greetingElement.textContent = `Welcome, ${currentUser.username}!`;
     }
 }
+
 // Product functions
 async function loadProducts() {
     try {
@@ -231,11 +194,12 @@ async function loadProducts() {
             throw new Error('Failed to load product data');
         }
         products = await response.json();
+        localStorage.setItem('products', JSON.stringify(products));
         displayProducts();
     } catch (error) {
         console.error('Error loading product data:', error);
-        document.getElementById('product-list').innerHTML = 
-            '<p class="error">Failed to load products, please try again later.</p>';
+        products = JSON.parse(localStorage.getItem('products')) || [];
+        displayProducts();
     }
 }
 
@@ -277,12 +241,10 @@ function displayProducts() {
         productsContainer.appendChild(productCard);
     });
 }
+
 // Cart functions
 function loadCart() {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
     displayCart();
 }
 
@@ -350,30 +312,28 @@ function displayCart() {
     totalElement.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
     cartItems.appendChild(totalElement);
 
-    // 在 loadCart()
-const checkoutBtn = document.createElement('button');
-checkoutBtn.className = 'checkout-btn';
-checkoutBtn.textContent = 'Confirm';
-checkoutBtn.addEventListener('click', function() {
-    // log in
-    if (!currentUser) {
-        showMessage('Please login to proceed to checkout', 'error');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
-        return;
-    }
-    
-    // check cart
-    if (cart.length === 0) {
-        showMessage('Your cart is empty. Add some items first!', 'error');
-        return;
-    }
-    
-    window.location.href = 'confirm.html';
-});
-cartItems.appendChild(checkoutBtn);
+    const checkoutBtn = document.createElement('button');
+    checkoutBtn.className = 'checkout-btn';
+    checkoutBtn.textContent = 'Confirm';
+    checkoutBtn.addEventListener('click', function() {
+        if (!currentUser) {
+            showMessage('Please login to proceed to checkout', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+            return;
+        }
+        
+        if (cart.length === 0) {
+            showMessage('Your cart is empty. Add some items first!', 'error');
+            return;
+        }
+        
+        window.location.href = 'confirm.html';
+    });
+    cartItems.appendChild(checkoutBtn);
 }
+
 // Quantity functions
 function decreaseQuantity(event) {
     const productId = parseInt(event.target.dataset.id);
@@ -586,10 +546,6 @@ function displayOrderSummary() {
             orderItemsList.appendChild(li);
             total += item.price * item.quantity;
         });
-    } else {
-        cart.forEach(item => {
-            total += item.price * item.quantity;
-        });
     }
     
     const orderTotalDisplay = document.getElementById('order-total-display');
@@ -598,52 +554,33 @@ function displayOrderSummary() {
     }
     showMessage('Order confirmed! Thank you for your purchase.', 'success');
     saveOrder(cart, total);
-    
 }
 
 function saveOrder(items, total) {
-    const request = indexedDB.open(dbName, dbVersion);
-    
-    request.onsuccess = function(event) {
-        const db = event.target.result;
-        const transaction = db.transaction(['orders', 'cart'], 'readwrite');
-        const ordersStore = transaction.objectStore('orders');
-        const cartStore = transaction.objectStore('cart');
-        
-        const order = {
-            userId: currentUser.username,
-            items: items,
-            total: total,
-            date: new Date()
-        };
-
-        const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-    existingOrders.push(order);
-    localStorage.setItem('orders', JSON.stringify(existingOrders));
-        
-        const addOrderRequest = ordersStore.add(order);
-        
-        addOrderRequest.onsuccess = function() {
-            const clearCartRequest = cartStore.clear();
-            clearCartRequest.onsuccess = function() {
-                console.log('Cart cleared after order placement');
-            };
-        };
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const order = {
+        userId: currentUser.username,
+        items: items,
+        total: total,
+        date: new Date().toISOString()
     };
+    
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.removeItem('cart');
+    cart = [];
 }
 
 function downloadOrderAsJson() {
-
-    const savedOrders = localStorage.getItem('orders');
+    const savedOrders = JSON.parse(localStorage.getItem('orders')) || [];
     
-    if (!savedOrders || JSON.parse(savedOrders).length === 0) {
+    if (savedOrders.length === 0) {
         showMessage('No orders found in your history.', 'error');
         return;
     }
     
     try {
-        const orders = JSON.parse(savedOrders);
-        const latestOrder = orders.reduce((latest, order) => {
+        const latestOrder = savedOrders.reduce((latest, order) => {
             return new Date(order.date) > new Date(latest.date) ? order : latest;
         });
         
@@ -653,7 +590,7 @@ function downloadOrderAsJson() {
         
         const a = document.createElement('a');
         a.href = url;
-        a.download = `order_${currentUser.username}_${latestOrder.id || Date.now()}.json`;
+        a.download = `order_${currentUser.username}_${latestOrder.date || Date.now()}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -663,9 +600,9 @@ function downloadOrderAsJson() {
         showMessage('Failed to download order data.', 'error');
     }
 }
+
 // Utility functions
 function showMessage(message, type) {
-    // Remove any existing messages first
     const existingMessages = document.querySelectorAll('.message');
     existingMessages.forEach(msg => msg.remove());
     
@@ -678,7 +615,6 @@ function showMessage(message, type) {
     
     document.body.appendChild(messageContainer);
     
-    // Position and style the message
     messageContainer.style.position = 'fixed';
     messageContainer.style.top = '20px';
     messageContainer.style.left = '50%';
@@ -692,7 +628,6 @@ function showMessage(message, type) {
     messageContainer.style.gap = '10px';
     messageContainer.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2.7s';
     
-    // Set colors based on message type
     if (type === 'success') {
         messageContainer.style.backgroundColor = '#4CAF50';
         messageContainer.style.color = 'white';
@@ -709,7 +644,6 @@ function showMessage(message, type) {
     }, 3000);
 }
 
-// Add this to script.js
 function updateNavigation() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('.nav-link');
@@ -725,7 +659,6 @@ function updateNavigation() {
         }
     });
     
-    // Update greeting if user is logged in
     if (currentUser) {
         const greetingElement = document.getElementById('user-greeting');
         if (greetingElement) {
@@ -740,12 +673,26 @@ function loadPageSpecificContent() {
     
     if (path === 'cart.html') {
         if (!currentUser) {
-            window.location.href = 'index.html';
-            return;
+            showMessage('first login', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+            return; 
         }
         loadProducts();
         loadCart();
-    } else if (path === 'confirm.html') {
+        
+    } 
+    else if (path === 'check.html') {  
+        if (!currentUser) {
+            showMessage('first login', 'error');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+            return;  
+        }
+    }
+    else if (path === 'confirm.html') {
         if (!currentUser) {
             window.location.href = 'index.html';
             return;
@@ -754,38 +701,127 @@ function loadPageSpecificContent() {
     }
 }
 
-
 function clearAllData() {
-    if (confirm('Are you sure you want to clear all your data? This cannot be undone.')) {
-        localStorage.removeItem('orders');
-        localStorage.removeItem('cart');
+    // Show confirmation dialog with clear explanation
+    if (confirm('Are you sure you want to clear all application data?\n(User accounts will be preserved)')) {
         
+        // Backup user data before clearing
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        
+        // Clear all localStorage data
+        localStorage.clear();
+        
+        // Restore user accounts
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        // Clear session data (including current login)
+        sessionStorage.clear();
+        
+        // Reset in-memory variables
         cart = [];
         currentUser = null;
         
-        showMessage('All your data has been cleared.', 'success');
-        window.location.href = 'index.html';
+        // Show success feedback
+        showMessage('All application data cleared (user accounts preserved)', 'success');
+        
+        // Redirect to homepage after brief delay
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
     }
 }
+
+/**
+ * Alternative implementation - selective clearing
+ * (More precise control over what gets deleted)
+ */
+function clearAllDataSelective() {
+    if (confirm('Clear all shopping cart and order data?\n(User accounts will remain intact)')) {
+        // Define exactly which keys to remove
+        const keysToRemove = [
+            'cart',       // Shopping cart data
+            'orders',     // Order history
+            'products',   // Product cache
+            'currentUser' // Session data
+        ];
+        
+        // Remove each specified key from storage
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+            sessionStorage.removeItem(key);
+        });
+        
+        // Reset runtime variables
+        cart = [];
+        currentUser = null;
+        
+        // User feedback
+        showMessage('Cleared all business data (user accounts preserved)', 'success');
+        
+        // Return to homepage
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
+    }
+}
+
 function logoutUser() {
-    // Clear both sessionStorage and localStorage to be safe
-    sessionStorage.removeItem('currentUser');
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('cart'); // Clear cart as well
+    // Backup user data before clearing
+    const users = JSON.parse(localStorage.getItem('users')) || {};
     
-    // Reset global variables
-    currentUser = null;
+    // Clear all localStorage data
+    localStorage.clear();
+    
+    // Restore user accounts
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    // Clear session storage completely
+    sessionStorage.clear();
+    
+    // Reset in-memory variables
     cart = [];
+    currentUser = null;
     
-    // Show logout message
-    showMessage('You have been logged out successfully', 'success');
+    // Show logout confirmation
+    showMessage('You have been successfully logged out. All session data cleared.', 'success');
     
-    // Redirect to home page after a short delay
+    // Redirect to homepage after delay
     setTimeout(() => {
         window.location.href = 'index.html';
     }, 1500);
 }
 
+/**
+ * Alternative selective logout implementation 
+ * (More precise control over what gets deleted)
+ */
+function logoutUserSelective() {
+    // Define exactly which keys to remove (excluding 'users')
+    const keysToRemove = [
+        'cart',          // Shopping cart data
+        'orders',        // Order history  
+        'products',      // Product cache
+        'currentUser'    // Session data
+    ];
+    
+    // Remove each specified key from storage
+    keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+    });
+    
+    // Reset runtime variables
+    cart = [];
+    currentUser = null;
+    
+    // User feedback
+    showMessage('Successfully logged out. Your user account remains active.', 'success');
+    
+    // Return to homepage
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 1500);
+}
 function validateRegistrationForm(username, password) {
     if (!username.trim()) {
         showMessage('Username cannot be empty', 'error');
@@ -823,5 +859,3 @@ function validateLoginForm(username, password) {
     }
     return true;
 }
-
-
