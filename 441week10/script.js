@@ -350,12 +350,12 @@ function displayCart() {
     totalElement.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
     cartItems.appendChild(totalElement);
 
-    // 在 loadCart() 函数中修改 checkoutBtn 的事件监听器
+    // 在 loadCart()
 const checkoutBtn = document.createElement('button');
 checkoutBtn.className = 'checkout-btn';
 checkoutBtn.textContent = 'Confirm';
 checkoutBtn.addEventListener('click', function() {
-    // 检查登录状态
+    // log in
     if (!currentUser) {
         showMessage('Please login to proceed to checkout', 'error');
         setTimeout(() => {
@@ -364,13 +364,12 @@ checkoutBtn.addEventListener('click', function() {
         return;
     }
     
-    // 检查购物车是否为空
+    // check cart
     if (cart.length === 0) {
         showMessage('Your cart is empty. Add some items first!', 'error');
         return;
     }
     
-    // 直接跳转到确认页面
     window.location.href = 'confirm.html';
 });
 cartItems.appendChild(checkoutBtn);
