@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTO Course Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1 class="app-title">RTO Course Platform</h1>
+            <nav class="main-nav">
+                <div class="logo">
+                    <img src="logo.png" alt="RTO Course Platform Logo">
+                </div>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="cart.html" class="nav-link">My Courses</a>
+                <a href="check.html" class="nav-link">Checkout</a>
+                <a href="browse.html" class="nav-link active">Browse Courses</a>
+                <div id="user-greeting" class="user-greeting"></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="order-confirmed">
+            <h2>Order Summary</h2>
+            
+            <div class="order-items">
+                <ul class="order-items-list" id="order-items-list">
+                    <!-- Order items will be dynamically inserted here -->
+                </ul>
+            </div>
+            
+            <div id="order-total-display" class="order-total-display">
+                <!-- Total price will be dynamically inserted here -->
+            </div>
+            
+            <div class="order-actions">
+                <button id="edit-order" class="edit-order-btn">Edit Order</button>
+                <button id="confirm-order" class="confirm-order-btn">Confirm Order</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+       // Current user and cart data
+let currentUser = JSON.parse(sessionStorage.getItem('currentUser')); // Changed to sessionStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+// Check login status
+if (!currentUser) {
+    window.location.href = 'index.html';
+} else {
+    document.getElementById('user-greeting').textContent = `Welcome, ${currentUser.username}!`;
+}
+
+// Display order summary
+function displayOrderSummary() {
+    const orderItemsList = document.getElementById('order-items-list');
+    const orderTotalDisplay = document.getElementById('order-total-display');
+    
+    if (cart.length === 0) {
+        orderItemsList.innerHTML = '<li class="empty-order">Your cart is empty</li>';
+        orderTotalDisplay.textContent = 'Total: $0.00';
+        document.getElementById('confirm-order').disabled = true;
+        return;
+    }
+    
+    orderItemsList.innerHTML = '';
+    
+    cart.forEach(item => {
+        const orderItem = document.createElement('li');
+        orderItem.className = 'order-item';
+        orderItem.innerHTML = `
+            <span class="item-name">${item.name}</span>
+            <span class="item-quantity">Qty: ${item.quantity}</span>
+            <span class="item-price">$${(item.price * item.quantity).toFixed(2)}</span>
+        `;
+        orderItemsList.appendChild(orderItem);
+    });
+    
+    const total = calculateTotal();
+    orderTotalDisplay.textContent = `Total: $${total.toFixed(2)}`;
+}
+
+// Calculate total price
+function calculateTotal() {
+    return cart.reduce((total, item) => {
+        return total + (item.price * item.quantity);
+    }, 0);
+}
+
+// Show message
+function showMessage(message, type) {
+    // Remove any existing messages first
+    const existingMessages = document.querySelectorAll('.message');
+    existingMessages.forEach(msg => msg.remove());
+
+    const messageContainer = document.createElement('div');
+    messageContainer.className = `message ${type}`;
+    messageContainer.innerHTML = `
+        <span class="message-icon">${type === 'success' ? '✓' : '⚠'}</span>
+        <span class="message-text">${message}</span>
+    `;
+
+    document.body.appendChild(messageContainer);
+
+    // Position and style the message
+    messageContainer.style.position = 'fixed';
+    messageContainer.style.top = '20px';
+    messageContainer.style.left = '50%';
+    messageContainer.style.transform = 'translateX(-50%)';
+    messageContainer.style.zIndex = '1000';
+    messageContainer.style.padding = '12px 24px';
+    messageContainer.style.borderRadius = '4px';
+    messageContainer.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    messageContainer.style.display = 'flex';
+    messageContainer.style.alignItems = 'center';
+    messageContainer.style.gap = '10px';
+    messageContainer.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2.7s';
+
+    // Set colors based on message type
+    if (type === 'success') {
+        messageContainer.style.backgroundColor = '#4CAF50';
+        messageContainer.style.color = 'white';
+    } else if (type === 'error') {
+        messageContainer.style.backgroundColor = '#F44336';
+        messageContainer.style.color = 'white';
+    } else {
+        messageContainer.style.backgroundColor = '#2196F3';
+        messageContainer.style.color = 'white';
+    }
+
+    setTimeout(() => {
+        messageContainer.remove();
+    }, 3000);
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    displayOrderSummary();
+    
+    // Edit order button - return to cart page
+    document.getElementById('edit-order').addEventListener('click', function() {
+        window.location.href = 'cart.html';
+    });
+    
+    // Confirm order button
+    document.getElementById('confirm-order').addEventListener('click', function() {
+        if (cart.length === 0) {
+            showMessage('Your cart is empty!', 'error');
+            return;
+        }
+        
+        // Create order object
+        const order = {
+            userId: currentUser.username,
+            items: [...cart],
+            total: calculateTotal(),
+            date: new Date().toISOString()
+        };
+        
+        // Get existing orders or create new array
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        
+        // Add new order
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        
+        // Clear cart
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Show success message and redirect
+        showMessage('Order confirmed successfully!', 'success');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
+    });
+});
+    </script>
+    <footer class="app-footer">
+        <p>Created by Colin</p>
+        <p>Address: 618 Tech Street, Sydney, NSW 2000, Australia</p>
+        <p>Phone: +61 2 8719 8721</p>
+        <p>Email: info@RiseAcademy.com.au</p>
+    </footer>
+
+</body>
+</html>
