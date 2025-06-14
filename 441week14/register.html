@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTO Course Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1 class="app-title">Rise Academy</h1>
+            <nav class="main-nav">
+                <div class="logo">
+                    <img src="logo.png" alt="RTO Course Platform Logo">
+                </div>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="cart.html" class="nav-link">My Courses</a>
+                <a href="check.html" class="nav-link">Checkout</a>
+                <a href="browse.html" class="nav-link active">Browse Courses</a>
+                <div id="user-greeting" class="user-greeting"></div>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="auth-form-container">
+            <div class="form-container">
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <input type="text" id="regUsername" placeholder="Username" autocomplete="username" required>
+                    <input type="email" id="regEmail" placeholder="Email" autocomplete="email" required>
+                    <input type="tel" id="regPhone" placeholder="Phone Number" autocomplete="tel" required>
+                    <input type="password" id="regPassword" placeholder="Password" autocomplete="new-password" required>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm Password" autocomplete="new-password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p class="auth-switch">Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>Created by Colin</p>
+        <p>Address: 618 Tech Street, Sydney, NSW 2000, Australia</p>
+        <p>Phone: +61 2 8719 8721</p>
+        <p>Email: info@RiseAcademy.com.au</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
