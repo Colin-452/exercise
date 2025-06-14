@@ -920,29 +920,6 @@ function logoutUserSelective() {
         window.location.href = 'index.html';
     }, 1500);
 }
-function validateRegistrationForm(username, password) {
-    if (!username.trim()) {
-        showMessage('Username cannot be empty', 'error');
-        document.getElementById('regUsername').focus();
-        return false;
-    }
-    if (!password.trim()) {
-        showMessage('Password cannot be empty', 'error');
-        document.getElementById('regPassword').focus();
-        return false;
-    }
-    if (password.length < 6) {
-        showMessage('Password must be at least 6 characters', 'error');
-        document.getElementById('regPassword').focus();
-        return false;
-    }
-    if (username.length < 4) {
-        showMessage('Username must be at least 4 characters', 'error');
-        document.getElementById('regUsername').focus();
-        return false;
-    }
-    return true;
-}
 
 function validateLoginForm(username, password) {
     if (!username.trim()) {
