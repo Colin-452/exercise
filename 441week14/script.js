@@ -1,5 +1,13 @@
+//Colin
 // Global variables
 const dbName = "EcommerceDB";
+const SESSION_CONFIG = {
+    timeout: 30 * 60 * 1000, // 30 minutes in milliseconds
+    warningTime: 5 * 60 * 1000,  // 5 minutes in milliseconds
+    checkInterval: 60 * 1000 // 1 minute in milliseconds
+};
+let inactivityTimer;
+let warningTimer;
 let currentUser = null;
 let products = [];
 let cart = [];
@@ -12,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
     checkLoginStatus();
     loadPageSpecificContent();
     updateNavigation();
+    // Only initialize session monitoring if user is logged in
+    if (currentUser) {
+        initSessionMonitoring();
+    }
     
     // Load products and cart if on cart page
     if (window.location.pathname.includes('cart.html')) {
@@ -53,6 +65,58 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function initSessionMonitoring() {
+    updateLastActivityTime();
+    
+    setInterval(checkSession, SESSION_CONFIG.checkInterval);
+    
+    ['mousemove', 'keydown', 'click', 'scroll'].forEach(event => {
+        document.addEventListener(event, updateLastActivityTime);
+    });
+}
+
+function updateLastActivityTime() {
+    sessionStorage.setItem('lastActivityTime', Date.now());
+    resetTimers();
+}
+
+function resetTimers() {
+    clearTimeout(inactivityTimer);
+    clearTimeout(warningTimer);
+    
+    const lastActivity = sessionStorage.getItem('lastActivityTime');
+    if (!lastActivity) return;
+    
+    const elapsed = Date.now() - parseInt(lastActivity);
+    const remainingTime = SESSION_CONFIG.timeout - elapsed;
+    
+    if (remainingTime > SESSION_CONFIG.warningTime) {
+        warningTimer = setTimeout(showTimeoutWarning, remainingTime - SESSION_CONFIG.warningTime);
+    }
+    
+    inactivityTimer = setTimeout(forceLogout, remainingTime);
+}
+
+function checkSession() {
+    const lastActivity = sessionStorage.getItem('lastActivityTime');
+    if (!lastActivity) return;
+    
+    const elapsed = Date.now() - parseInt(lastActivity);
+    if (elapsed >= SESSION_CONFIG.timeout) {
+        forceLogout();
+    }
+}
+
+function showTimeoutWarning() {
+    const minutes = Math.ceil(SESSION_CONFIG.warningTime / 60000);
+    showMessage(`Your session will expire in ${minutes} minutes due to inactivity.`, 'warning', SESSION_CONFIG.warningTime);
+}
+
+function forceLogout() {
+    logoutUserSelective(true);
+    showMessage('Your session has expired due to inactivity. Please login again.', 'warning');
+}
 // Storage initialization
 function initializeStorage() {
     // Initialize localStorage structures if they don't exist
@@ -259,6 +323,9 @@ function handleLogin(event) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         sessionStorage.setItem('currentUser', JSON.stringify(user));
         updateUserGreeting();
+        
+        initSessionMonitoring();
+        
         showMessage('Login successful! Redirecting...', 'success');
         setTimeout(() => {
             window.location.href = 'cart.html';
@@ -893,33 +960,37 @@ function logoutUser() {
  * Alternative selective logout implementation 
  * (More precise control over what gets deleted)
  */
-function logoutUserSelective() {
-    // Define exactly which keys to remove (excluding 'users')
+function logoutUserSelective(isTimeout = false) {
+    clearTimeout(inactivityTimer);
+    clearTimeout(warningTimer);
+    
+    ['mousemove', 'keydown', 'click', 'scroll'].forEach(event => {
+        document.removeEventListener(event, updateLastActivityTime);
+    });
+    
     const keysToRemove = [
-        'cart',          // Shopping cart data
-        'orders',        // Order history  
-        'products',      // Product cache
-        'currentUser'    // Session data
+        'cart', 'orders', 'products', 'currentUser', 'lastActivityTime'
     ];
     
-    // Remove each specified key from storage
     keysToRemove.forEach(key => {
         localStorage.removeItem(key);
         sessionStorage.removeItem(key);
     });
     
-    // Reset runtime variables
     cart = [];
     currentUser = null;
     
-    // User feedback
-    showMessage('Successfully logged out. Your user account remains active.', 'success');
+    const message = isTimeout 
+        ? 'Your session has expired due to inactivity.' 
+        : 'Successfully logged out. Your user account remains active.';
     
-    // Return to homepage
+    showMessage(message, isTimeout ? 'warning' : 'success');
+    
     setTimeout(() => {
         window.location.href = 'index.html';
     }, 1500);
 }
+
 
 function validateLoginForm(username, password) {
     if (!username.trim()) {
